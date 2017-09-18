@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\af25c2c819e372a1432265ef6322fb993c18f231\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="0e1f104cf60bfe34147ef670229f2635789c79a4">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_9cc0e97874106f5c583d8269dd63a6982b0bcfbd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.gradle\caches\modules-2\files-2.1\android.arch.lifecycle\common\1.0.0\e414a4cb28434e25c4f6aa71426eb20cf4874ae9\common-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="e414a4cb28434e25c4f6aa71426eb20cf4874ae9">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\common-1.0.0_f6a800ed30cdd1d7e5d113a720b09065ecfee0da.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\187118d44f281fbb9b56142bc34761748cc218b7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="40392f30a601db5675cdf18192aab013d6fee6ec">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_bfbe739b6ebeef2201077c586f76f89ab2fbd417.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\e9fc57143af6ea5c4b0fd2e677b059cfa07409db\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6f4138a4e065826cb044d49faea4cfd7191773d1">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_fe087a4f38d46caa0d48f85ec31ab6f332558bac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\ca9d6892a070828a1bad4d27ebb59b0012d45523\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2442771a5590dd4eb4bce00c2e9dca9e22e4c963">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_2763e75168c48add2971fedd71eaf0fbb98e3dae.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\440e285e35fb2034fb7584c4a07e4125d0fa240e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3a29ac095c46d65de005cea6deeab43882d332ed">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_099d289372381bc641dd79bc3ff36baa621fe894.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.gradle\caches\modules-2\files-2.1\javax.annotation\javax.annotation-api\1.2\479c1e06db31c432330183f5cae684163f186146\javax.annotation-api-1.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="479c1e06db31c432330183f5cae684163f186146">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\javax.annotation-api-1.2_73d29cab9dbdd930adde0945f4adad82aed07362.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\3c93936702bbbd22be371a5638de23fb792ba58f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="b62fdc4cfef174c1e456014195c83fa7de7dc041">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_a9fdb43e8be2444dd9abd38f636f35dbecda4d0c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.gradle\caches\modules-2\files-2.1\com.android.support\support-annotations\26.1.0\814258103cf26a15fcc26ecce35f5b7d24b73f8\support-annotations-26.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="0814258103cf26a15fcc26ecce35f5b7d24b73f8">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\support-annotations-26.1.0_cac4dd0141f2ae94da65f9ff0fa7c07cd7f2c64a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\c964064ea616a1cabe931058ac9ee03441924af7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_8e81efebe1ef9fadeefd2a522b3ed1f9c36afdd9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.2.1\2287494d4f5f9f3a9a2bb6980e3f32053721b315\core-3.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2287494d4f5f9f3a9a2bb6980e3f32053721b315">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\core-3.2.1_0daae533c8073dbd70cb5b433834b1e988c2ac86.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\d02fd7263b2055d241f86d815ea39c31fafbd8a2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="508f50705b4fde51a16259f29c854201a3044516">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_efb2948169a0858691176d44c87998a9e4644b21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\4937d15c62d7a100db5801a3be40250252865fd6\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="7efef32744ca4a436492d5cf28c08698cc2af256">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_18c8449a2cc8b2de24d1e7e6d16a6048635ba873.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\5ba1d54605871644157c027b24ca3e947af5a3c7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="f428e2fbc9ed0b297e3a3f420e51e6982f66822d">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_b5de0940301df3e99cad31f366b6eb1aba88d84d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.gradle\caches\modules-2\files-2.1\android.arch.core\common\1.0.0\a2d487452376193fc8c103dd2b9bd5f2b1b44563\common-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="a2d487452376193fc8c103dd2b9bd5f2b1b44563">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\common-1.0.0_118e57fc450bb672fd4e156b09948cfddc7ccfad.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\libs\gson-2.2.4.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\gson-2.2.4_49de8276cf2613ce3f9b4997d553c0f9441e4f44.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\0971b77299809f937fd884a175ea0a6bcb4d9621\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="233f60a165ae622c8b36731502ebbda0f65e1930">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_4b7c4ac9a13c46774e913452836db3c5c3987c37.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\1407053\.android\build-cache\e6bff65b5dee01dcdfae42cd9952800295fab283\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="f97cf85b0fe70d37a705111dafa6b1b418ea1650">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\pre-dexed\debug\classes_515380a72640cbc17005cc9788c6fd0dcc5b9cd4.jar" />
+    </item>
+
+</items>

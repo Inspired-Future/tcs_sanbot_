@@ -24,7 +24,7 @@
             android:padding="10dp"
             android:gravity="center"
             android:layout_marginBottom="10dp"
-            android:text="Anonymous User"/>
+            android:text="Guest Face Recognition"/>
 
 
         <TextView
@@ -35,7 +35,10 @@
             android:textColor="#ffffff"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Authentication User"/>
+            android:text="Customer Face Recognition"/>
+
+
+
 
         </LinearLayout>
     <LinearLayout

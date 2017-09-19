@@ -3,6 +3,7 @@ package com.app.tcs.sanbot;
 import android.content.Intent;
 import android.media.MediaCodec;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,9 +13,14 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qihancloud.opensdk.base.TopBaseActivity;
+import com.qihancloud.opensdk.beans.FuncConstant;
+import com.qihancloud.opensdk.beans.OperationResult;
+import com.qihancloud.opensdk.function.beans.SpeakOption;
 import com.qihancloud.opensdk.function.unit.MediaManager;
+import com.qihancloud.opensdk.function.unit.SpeechManager;
 
 import java.nio.ByteBuffer;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,15 +39,20 @@ public class ScanActivity extends TopBaseActivity {
 
     private String name;
 
+
+    private TextToSpeech tts;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scan_activity_main);
         ButterKnife.bind(this);
+
         scanView.setVisibility(View.VISIBLE);
         scanResultView.setVisibility(View.GONE);
         name = getIntent().getStringExtra("name");
         tvUserName.setText("Hello " + name);
+
 
     }
 
@@ -81,4 +92,6 @@ public class ScanActivity extends TopBaseActivity {
             }
         }
     }
+
+
 }

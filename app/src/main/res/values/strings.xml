@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">TCSSanbot</string>
+
+    <string name="primaryKey">6995b1668c264b45a1548810903eb872</string>
+    <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
+    <string name="add_subscription_key_tip">Please put your subscription key to source file \"app/res/values/strings.xml\" to enable Speech API calls.</string>
+
+    <!--
+    Enter an optional authentication Uri such as:
+    https://westus.api.cognitive.microsoft.com/sts/v1.0/issuetoken
+    -->
+    <string name="authenticationUri"></string>
+
+    <string name="luisAppID">yourLuisAppID</string>
+    <string name="luisSubscriptionID">yourLuisSubscriptionID</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

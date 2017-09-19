@@ -3,6 +3,7 @@ package com.app.tcs.sanbot;
 import android.content.Intent;
 import android.media.MediaCodec;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,7 +13,9 @@ import com.google.gson.Gson;
 import com.qihancloud.opensdk.base.TopBaseActivity;
 import com.qihancloud.opensdk.beans.FuncConstant;
 import com.qihancloud.opensdk.function.beans.FaceRecognizeBean;
+import com.qihancloud.opensdk.function.beans.SpeakOption;
 import com.qihancloud.opensdk.function.unit.MediaManager;
+import com.qihancloud.opensdk.function.unit.SpeechManager;
 import com.qihancloud.opensdk.function.unit.interfaces.media.FaceRecognizeListener;
 
 
@@ -33,6 +36,7 @@ public class FaceRecognizeActivity extends TopBaseActivity {
     private int type = 0;
 
 
+
     private MediaManager mediaManager;
     /*MediaCodec mediaCodec;
     long decodeTimeout = 16000;
@@ -48,6 +52,7 @@ public class FaceRecognizeActivity extends TopBaseActivity {
         ButterKnife.bind(this);
         mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
 
+
     }
 
     @Override
@@ -56,6 +61,8 @@ public class FaceRecognizeActivity extends TopBaseActivity {
         llButtonView.setVisibility(View.VISIBLE);
         llLoaderView.setVisibility(View.GONE);
         initListener();
+
+        //speechManager.startSpeak("Haaaaaa   I am rajesh");
     }
 
     @Override
@@ -91,13 +98,13 @@ public class FaceRecognizeActivity extends TopBaseActivity {
                                 intent.putExtra("name", bean.getUser());
                                 startActivity(intent);
                             }
-                            sb.append(new Gson().toJson(bean));
-                            sb.append("\n");
+                           // sb.append(new Gson().toJson(bean));
+                           // sb.append("\n");
                             Log.d("TAGGGG", "hjhhjhhjhj" + sb.toString());
                         }
                     }else{
                         Intent intent = new Intent(FaceRecognizeActivity.this, ScanActivity.class);
-                        intent.putExtra("name", "Anonymous User");
+                        intent.putExtra("name", "Guest User");
                         startActivity(intent);
                     }
                 }

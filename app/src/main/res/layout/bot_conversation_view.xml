@@ -27,6 +27,8 @@
             android:id="@+id/tv_bot_msg_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_bot_msg"
             android:paddingTop="5dp"
             android:textSize="10sp" />
     </RelativeLayout>
@@ -42,6 +44,7 @@
         android:paddingBottom="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="15dp"
+        android:layout_below="@id/rl_bot_msg"
         android:visibility="gone">
 
         <ImageView
@@ -72,7 +75,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"/>
 
+        <TextView
+            android:id="@+id/tv_bot_msg_timestamp_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingTop="5dp"
+            android:textSize="10sp" />
+
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

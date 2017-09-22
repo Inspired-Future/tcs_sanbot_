@@ -66,6 +66,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView tvBotMsg;
         @BindView(R.id.tv_bot_msg_timestamp)
         TextView tvBotMsgTimeStamp;
+        @BindView(R.id.tv_bot_msg_timestamp_next)
+        TextView tvBotMsgTimeStampNext;
         @BindView(R.id.ll_bot_content)
         LinearLayout llBotContent;
         @BindView(R.id.tv_bot_title)
@@ -105,23 +107,34 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        //DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         //float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        //float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
             myViewHolder.tvMyMsg.setText(botMsgActivitiesResponseList.get(position).getText());
-            myViewHolder.tvMyMsgTimeStamp.setText(botMsgActivitiesResponseList.get(position).getTimestamp());
+            String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0,16).replace("T"," ");
+            myViewHolder.tvMyMsgTimeStamp.setText(timeStamp);
         } else if (holder instanceof BotViewHolder) {
             final BotViewHolder botViewHolder = (BotViewHolder) holder;
-
             sharepreferenceKeystore.updateBoolean(AppConstant.SPEECH_LISTENER_FLAG, false);
             if(botMsgActivitiesResponseList.get(position).getText()!=null){
                 botViewHolder.rlBotMsg.setVisibility(View.VISIBLE);
                 botViewHolder.llBotContent.setVisibility(View.GONE);
                 botViewHolder.tvBotMsg.setText(botMsgActivitiesResponseList.get(position).getText());
+
+                Log.d("TAG_CHAT","position ::: " + position);
+                Log.d("TAG_CHAT","botMsgActivitiesResponseList.size ::: " + botMsgActivitiesResponseList.size());
+
+                if(position==botMsgActivitiesResponseList.size()-1 &&
+                        botMsgActivitiesResponseList.get(position).getText().toString().contains("Please scan the QR Code")){
+                    eventTriggerInterface.scanQRCode();
+                }
+                String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0,16).replace("T"," ");
+                botViewHolder.tvBotMsgTimeStamp.setText(timeStamp);
             }else {
+
                 botViewHolder.rlBotMsg.setVisibility(View.GONE);
                 botViewHolder.llBotContent.setVisibility(View.VISIBLE);
                 botViewHolder.tvBotTitleMsg.setText(botMsgActivitiesResponseList.get(position)
@@ -132,6 +145,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     botViewHolder.tvBotSubTitleMsg.setText(botMsgActivitiesResponseList.get(position)
                             .getAttachments().get(0).getContent().getSubtitle());
                 }
+                String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0,16).replace("T"," ");
+                botViewHolder.tvBotMsgTimeStampNext.setText(timeStamp);
 
                 if(botMsgActivitiesResponseList.get(position).getAttachments().get(0).getContent()
                         .getImages()!=null)
@@ -192,6 +207,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface EventTriggerInterface {
         public void eventTrigger(String msg);
+        void scanQRCode();
     }
 
     public void updateRecord(List<BotMsgActivitiesResponse> botMsgActivitiesResponseList) {

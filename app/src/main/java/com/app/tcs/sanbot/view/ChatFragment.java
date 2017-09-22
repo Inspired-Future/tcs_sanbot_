@@ -1,15 +1,18 @@
 package com.app.tcs.sanbot.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.app.tcs.sanbot.R;
@@ -25,6 +28,8 @@ import com.app.tcs.sanbot.presenter.ISendConversationPresenter;
 import com.app.tcs.sanbot.presenter.SendConversationPresenterImpl;
 import com.app.tcs.sanbot.restfull.ApiClient;
 import com.app.tcs.sanbot.restfull.ApiInterface;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +57,7 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
     public ApiInterface apiService;
     public ChatListAdapter chatListAdapter;
     List<BotMsgActivitiesResponse> botMsgActivitiesResponseList;
-    Handler customHandler;
+    Handler customHandler, barCodeScanHandler;
     int arraySize = 0;
     LinearLayoutManager llm;
 
@@ -135,6 +140,21 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
                 "message", msg, "user1", conversationToken, true);
     }
 
+    @Override
+    public void scanQRCode() {
+
+        barCodeScanHandler = new Handler();
+        barCodeScanHandler.postDelayed(barCodeScanThread, 1000);
+        //IntentIntegrator integrator = new IntentIntegrator.forSupportFragment(this);
+
+        /*integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("Scan");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(false);
+        integrator.setBarcodeImageEnabled(false);
+        integrator.initiateScan();*/
+    }
+
     private Runnable updateListThread = new Runnable() {
         public void run() {
             getConversationPresenter.getConversationMsg(conversationId, conversationToken);
@@ -142,10 +162,30 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
         }
     };
 
+
+    private Runnable barCodeScanThread = new Runnable() {
+        public void run() {
+            IntentIntegrator.forSupportFragment(ChatFragment.this)
+                    .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES).initiateScan();
+        }
+    };
+
     void sendLuisMsg(String msg) {
         sendConversationPresenter.sendConversation(conversationId,
                 "message", msg,
                 "user1", conversationToken, false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(intentResult != null) {
+            if(intentResult.getContents() == null) {
+                sendLuisMsg("Scan failed");
+            } else {
+                sendLuisMsg(intentResult.getContents());
+            }
+        }
     }
 }
 

@@ -36,7 +36,7 @@ import butterknife.Unbinder;
 
 
 public class ChatFragment extends Fragment implements ISendConversationPresenter.View,
-        IGetConversationPresenter.View , ChatListAdapter.EventTriggerInterface{
+        IGetConversationPresenter.View , ChatListAdapter.EventTriggerInterface {
 
     @BindView(R.id.rv_chat_list)
     RecyclerView rvChatList;
@@ -67,14 +67,13 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
 
 
         botMsgActivitiesResponseList = new ArrayList<BotMsgActivitiesResponse>();
-
         llm = new LinearLayoutManager(getActivity());
         llm.setStackFromEnd(true);
         rvChatList.setHasFixedSize(true);
         rvChatList.setLayoutManager(llm);
         rvChatList.setItemAnimator(new DefaultItemAnimator());
         conversationId = getArguments().getString("id");
-        conversationToken =  getArguments().getString("token");
+        conversationToken = getArguments().getString("token");
         sendConversationPresenter = new SendConversationPresenterImpl(
                 this,
                 new SendConversationModelImpl(getActivity(), apiService)
@@ -94,7 +93,7 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
 
     @OnClick(R.id.btn_send)
     public void sendConversation(View view) {
-        if(etMessage.getText().toString().trim().length()>0) {
+        if (etMessage.getText().toString().trim().length() > 0) {
             sendConversationPresenter.sendConversation(conversationId,
                     "message", etMessage.getText().toString().trim(),
                     "user1", conversationToken, false);
@@ -120,7 +119,8 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
 
     @Override
     public void onGetConversationSuccessful(BotMsgResponse botMsgResponse) {
-        if(botMsgResponse.getActivities().size()>0 & arraySize!= botMsgResponse.getActivities().size()) {
+        if (botMsgResponse.getActivities().size() > 0 & arraySize != botMsgResponse.getActivities().size()) {
+
             botMsgActivitiesResponseList.clear();
             botMsgActivitiesResponseList = botMsgResponse.getActivities();
             chatListAdapter.updateRecord(botMsgActivitiesResponseList);
@@ -136,11 +136,16 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
     }
 
     private Runnable updateListThread = new Runnable() {
-        public void run()
-        {
+        public void run() {
             getConversationPresenter.getConversationMsg(conversationId, conversationToken);
-            customHandler.postDelayed(this, 1500);
+            customHandler.postDelayed(this, 1000);
         }
     };
+
+    void sendLuisMsg(String msg) {
+        sendConversationPresenter.sendConversation(conversationId,
+                "message", msg,
+                "user1", conversationToken, false);
+    }
 }
 

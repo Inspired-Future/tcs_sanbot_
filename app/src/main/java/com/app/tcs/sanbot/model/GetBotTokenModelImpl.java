@@ -1,6 +1,7 @@
 package com.app.tcs.sanbot.model;
 
 import android.content.Context;
+import android.util.Log;
 
 
 import com.app.tcs.sanbot.bean.GenerateToken;
@@ -22,9 +23,11 @@ public class GetBotTokenModelImpl implements IGetBotTokenModel {
     @Override
     public void getBotTokenDetails(String authorization, final Callback callback) {
         Call<GenerateToken> call = apiService.getBotToken(authorization);
+
         call.enqueue(new retrofit2.Callback<GenerateToken>() {
             @Override
             public void onResponse(Call<GenerateToken> call, Response<GenerateToken> response) {
+                Log.d("TAG_ROBOT","response.toString()  :::::   "+response.toString());
                 if (response.body() != null) {
                     GenerateToken generateTokenResponse = response.body();
                     callback.onSuccess(generateTokenResponse);

@@ -6,7 +6,8 @@
     <FrameLayout
         android:id="@+id/fl_chatlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_chat"/>
 
     <ProgressBar
         android:id="@+id/pb_loader"

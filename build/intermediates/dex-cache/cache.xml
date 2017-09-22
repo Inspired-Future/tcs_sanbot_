@@ -3,30 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\libs\gson-2.2.4.jar"
+        jar="C:\Users\1407053\.android\build-cache\75bd4a36383e81c1f2da226f66d0aa31013c5d04\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.1"
-        sha1="a60a5e993c98c864010053cb901b7eab25306568">
-        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\2\gson-2.2.4_49de8276cf2613ce3f9b4997d553c0f9441e4f44\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.1"
-        sha1="286f5f08e1d6fe5a7d63e7c9ec26be2eabb51db5">
-        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3b83e1d82667911545c61249a69a6623f76bbf87\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\1407053\.android\build-cache\c461a82157d95d6f518e3ce96f4f050e6d697033\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.1"
-        sha1="b12cd9c87c3dfb012a911b6e38d2444ed0a65e1f">
-        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4c1394a9abd1d089616e81cd646a49667c40d2c3\classes.dex" />
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_aa9c5b1269eabf636602ad3f7603afff4c931ded\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -36,6 +18,15 @@
         revision="26.0.1"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e55cfad0b487103cf4f024104f73ee759f5c4ae1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="a6a3517b05ecad861b3bb648d9184f1a9fc1a4a8">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3b83e1d82667911545c61249a69a6623f76bbf87\classes.dex" />
     </item>
 
 </items>

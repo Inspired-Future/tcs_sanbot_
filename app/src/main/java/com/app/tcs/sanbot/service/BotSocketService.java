@@ -35,15 +35,15 @@ public class BotSocketService extends Service {
         Toast.makeText(this, "start command", Toast.LENGTH_SHORT).show();
          String url = intent.getStringExtra("Bot_WSS");
 
-        String baseUrl = url.substring(0,63);//"https://directline.botframework.com/v3/directline/conversations";
-        final String queryUrl = url.substring(63,url.length());
+        //String baseUrl = url.substring(0,63);//"https://directline.botframework.com/v3/directline/conversations";
+        //final String queryUrl = url.substring(63,url.length());
 
         Log.d(TAG, "call: url - " + url);
-        Log.d(TAG, "call: baseUrl - " + baseUrl);
-        Log.d(TAG, "call: queryUrl - " + queryUrl);
+        //Log.d(TAG, "call: baseUrl - " + baseUrl);
+        //Log.d(TAG, "call: queryUrl - " + queryUrl);
 
         try {
-            mSocket = IO.socket(baseUrl); //http://deposits.socashdev.com/user/announce");
+            mSocket = IO.socket(url); //http://deposits.socashdev.com/user/announce");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -53,22 +53,137 @@ public class BotSocketService extends Service {
         mSocket.on("typing", onTypeMessage);
 
 
-        JSONObject obj = new JSONObject();
+        /*JSONObject obj = new JSONObject();
         try {
             obj.put("url", queryUrl);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mSocket.emit("get", obj);
+        mSocket.emit("get", obj);*/
 
 
+        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_CONNECT");
+            }
+        });
 
+        mSocket.on(Socket.EVENT_CONNECT_ERROR, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_CONNECT_ERROR :::: ");
+            }
+        });
 
+        mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_CONNECT_TIMEOUT");
+            }
+        });
 
+        mSocket.on(Socket.EVENT_CONNECTING, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_CONNECTING");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_DISCONNECT");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_ERROR, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_ERROR");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_MESSAGE, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_MESSAGE");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_DISCONNECT");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_CONNECT_TIMEOUT");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_PING, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_PING");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_PING, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_PING");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_PONG, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_PONG");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_RECONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_RECONNECT");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_RECONNECT_ATTEMPT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_RECONNECT_ATTEMPT");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_RECONNECT_ERROR, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_RECONNECT_ERROR");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_RECONNECT_FAILED, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_RECONNECT_FAILED");
+            }
+        });
+
+        mSocket.on(Socket.EVENT_RECONNECTING, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("STAG", "Socket.EVENT_RECONNECTING");
+            }
+        });
 
         mSocket.connect();
 
-        if(mSocket.connected()){
+        if (mSocket.connected()) {
             Log.d(TAG, "connected");
         }
 

@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Start" />
+        android:text="Start"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="Select Mode"
         android:id="@+id/buttonSelectMode"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"/>
 
     <RadioGroup
         android:id="@+id/groupMode"
@@ -30,7 +30,8 @@
             android:text="Use Microphone with ShortPhrase mode"
             android:id="@+id/radioButton"
             android:layout_above="@+id/micRadioButton"
-            android:layout_alignRight="@+id/editText1" />
+            android:layout_alignRight="@+id/editText1"
+           />
 
         <RadioButton
             android:layout_width="wrap_content"

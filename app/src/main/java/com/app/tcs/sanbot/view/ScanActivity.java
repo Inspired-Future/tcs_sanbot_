@@ -80,11 +80,11 @@ public class ScanActivity extends TopBaseActivity {
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(intentResult != null) {
             if(intentResult.getContents() == null) {
-                Log.d("FaceRecognizeActivity", "Cancelled");
+                Log.d("SplashActivity", "Cancelled");
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
 
             } else {
-                Log.d("FaceRecognizeActivity", "Scanned");
+                Log.d("SplashActivity", "Scanned");
 
                 scanView.setVisibility(View.GONE);
                 scanResultView.setVisibility(View.VISIBLE);

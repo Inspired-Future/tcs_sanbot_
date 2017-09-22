@@ -10,4 +10,7 @@ public class AppConstant {
     public static final String BOT_SECRET_KEY = "Bearer 0eM5DHesPHs.cwA.ybE.R7sOjwA2CE06wa5YHSrJNim9ax8e1m5WaP4-aHHHTlg";
     public static final int TIMEOUT = 25;
 
+    public static final String ROBOT_STATEMENT = "";
+    public static final String SPEECH_LISTENER_FLAG = "sanbot_speech_listener_flag";
+
 }

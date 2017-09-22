@@ -43,7 +43,7 @@ public class SharepreferenceKeystore {
 
 
     public boolean getBoolean(String key) {
-        return SP.getBoolean(key, false);
+        return SP.getBoolean(key, true);
     }
 
     public void clear() {

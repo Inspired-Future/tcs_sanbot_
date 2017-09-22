@@ -16,7 +16,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.app.tcs.sanbot.R;
+import com.app.tcs.sanbot.appconstant.AppConstant;
 import com.app.tcs.sanbot.bean.BotMsgActivitiesResponse;
+import com.app.tcs.sanbot.utils.SharepreferenceKeystore;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -31,12 +33,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private EventTriggerInterface eventTriggerInterface;
     private Context context;
 
+    private SharepreferenceKeystore sharepreferenceKeystore;
+
     List<BotMsgActivitiesResponse> botMsgActivitiesResponseList;
     public ChatListAdapter(Context context, List<BotMsgActivitiesResponse> botMsgActivitiesResponseList,
                            EventTriggerInterface eventTriggerInterface) {
         this.context = context;
         this.botMsgActivitiesResponseList = botMsgActivitiesResponseList;
         this.eventTriggerInterface = eventTriggerInterface;
+
+        sharepreferenceKeystore = SharepreferenceKeystore.getInstance(context);
     }
 
 
@@ -110,6 +116,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if (holder instanceof BotViewHolder) {
             final BotViewHolder botViewHolder = (BotViewHolder) holder;
 
+            sharepreferenceKeystore.updateBoolean(AppConstant.SPEECH_LISTENER_FLAG, false);
             if(botMsgActivitiesResponseList.get(position).getText()!=null){
                 botViewHolder.rlBotMsg.setVisibility(View.VISIBLE);
                 botViewHolder.llBotContent.setVisibility(View.GONE);

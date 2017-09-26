@@ -2,6 +2,7 @@ package com.app.tcs.sanbot.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ public class BotChatActivity extends BaseLuisActivity implements IGetBotTokenPre
     ProgressBar pbLoader;
 
     boolean chatFlag = false;
+    boolean speechFlag =false;
 
     public ApiInterface apiService;
     public GetBotTokenPresenterImpl getBotTokenPresenter;
@@ -51,7 +53,6 @@ public class BotChatActivity extends BaseLuisActivity implements IGetBotTokenPre
         setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
 
-
         if (apiService == null) {
             apiService = ApiClient.getClient(
                     BotChatActivity.this).create(ApiInterface.class);
@@ -61,7 +62,6 @@ public class BotChatActivity extends BaseLuisActivity implements IGetBotTokenPre
                 new GetBotTokenModelImpl(this, apiService)
         );
         getBotTokenPresenter.getBotToken(AppConstant.BOT_SECRET_KEY);
-
 
     }
 
@@ -75,6 +75,10 @@ public class BotChatActivity extends BaseLuisActivity implements IGetBotTokenPre
         chatFragment.sendLuisMsg(msg);
     }
 
+    @Override
+    protected void onSendPartialLuisMsg(String msg) {
+
+    }
 
 
     @Override
@@ -99,10 +103,12 @@ public class BotChatActivity extends BaseLuisActivity implements IGetBotTokenPre
                 new StartConversationModelImpl(this, apiService)
         );
         startConversationPresenter.getToken("Bearer " + generateTokenResponse.getToken());
+
     }
 
     @Override
     public void onStartConversationSuccessful(StartConversation startConversation) {
+
 
 
         /*Intent intent = new Intent(this, BotSocketService.class);

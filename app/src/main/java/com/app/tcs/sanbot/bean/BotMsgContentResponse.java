@@ -20,6 +20,12 @@ public class BotMsgContentResponse {
     @SerializedName("buttons")
     @Expose
     private List<BotMsgButtonResponse> buttons = null;
+    @SerializedName("text")
+    @Expose
+    private String text;
+
+
+
 
     public String getTitle() {
         return title;
@@ -52,5 +58,15 @@ public class BotMsgContentResponse {
     public void setButtons(List<BotMsgButtonResponse> buttons) {
         this.buttons = buttons;
     }
+
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
 
 }

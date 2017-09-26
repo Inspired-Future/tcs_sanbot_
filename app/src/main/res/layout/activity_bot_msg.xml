@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sanbot_bg">
+
+    <RelativeLayout
+        android:id="@+id/rl_msg_view"
+        android:layout_width="900dp"
+        android:layout_height="wrap_content"
+        android:minHeight="400dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_msg">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:padding="25dp"
+            android:gravity="center"
+            >
+
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="#156572"
+            android:textStyle="italic"
+            android:text="Please wait....."
+            android:layout_marginBottom="15dp"/>
+
+
+        <TableLayout
+            android:id="@+id/tl_bot_btn_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1000dp"
+        android:layout_marginRight="200dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5656655623"
+            android:textColor="#ffffff"
+            />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_sanbot_head"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginLeft="75dp"
+        android:src="@drawable/sanbot_head"
+        android:visibility="gone"/>
+
+
+    <ImageView
+        android:id="@+id/iv_rajesh_head"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginRight="75dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/rajesh_head"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

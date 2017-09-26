@@ -10,8 +10,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:scrollbars="vertical"
-            android:padding="10dp"
-            android:background="@drawable/bg_chat"/>
+            android:padding="10dp"/>
 
 
    <LinearLayout

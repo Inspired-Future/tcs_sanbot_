@@ -54,14 +54,14 @@ import com.qihancloud.opensdk.base.TopBaseActivity;
 
 import java.util.Locale;
 
-public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeechRecognitionServerEvents,  TextToSpeech.OnInitListener {
+public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeechRecognitionServerEvents{
     int m_waitSeconds = 0;
     DataRecognitionClient dataClient = null;
     MicrophoneRecognitionClient micClient = null;
     FinalResponseStatus isReceivedResponse = FinalResponseStatus.NotReceived;
     Handler customHandler;
     public SharepreferenceKeystore sharepreferenceKeystore;
-    public TextToSpeech tts;
+   // public TextToSpeech tts;
 
 
 
@@ -134,7 +134,7 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
         super.onCreate(savedInstanceState);
         sharepreferenceKeystore = SharepreferenceKeystore.getInstance(this);
         customHandler = new Handler();
-        tts = new TextToSpeech(this, this);
+        //tts = new TextToSpeech(this, this);
         initiateClient();
     }
 
@@ -190,7 +190,8 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
             // we got the final result, so it we can end the mic reco.  No need to do this
             // for dataReco, since we already called endAudio() on it as soon as we were done
             // sending all the data.
-            this.micClient.endMicAndRecognition();
+
+            //this.micClient.endMicAndRecognition();
         }
 
         if (isFinalDicationMessage) {
@@ -201,9 +202,20 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
             this.WriteLine("********* Final n-BEST Results *********");
 
             if(response.Results.length>0) {
-                if (this instanceof BotChatActivity) {
-                    if (!sharepreferenceKeystore.getBoolean(AppConstant.SPEECH_LISTENER_FLAG)) {
+                if(this instanceof SplashActivity){
+                    /*if(response.Results[0].DisplayText.toLowerCase().indexOf("hello") != -1){
+                        checkFaceDeduction();
+                    }*/
+
+                }else if (this instanceof BotChatActivity) {
+                    /*if (!sharepreferenceKeystore.getBoolean(AppConstant.SPEECH_LISTENER_FLAG)) {
                         sharepreferenceKeystore.updateBoolean(AppConstant.SPEECH_LISTENER_FLAG, true);
+                        onSendLuisMsg(response.Results[0].DisplayText);
+                    }*/
+
+                }else if (this instanceof BotMsgActivity) {
+                    if (!sharepreferenceKeystore.getBoolean("TextToSpeechFlag")) {
+                        //sharepreferenceKeystore.updateBoolean(AppConstant.SPEECH_LISTENER_FLAG, true);
                         onSendLuisMsg(response.Results[0].DisplayText);
                     }
                 }
@@ -222,7 +234,7 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
 
 
         Log.d("TAG_ROBOT","payload  :::: " + payload);
-        if (this instanceof SplashActivity) {
+        /*if (this instanceof SplashActivity) {
             Gson gson = new Gson();
             LuisSpeechResponse luisSpeechResponse = gson.fromJson(payload, LuisSpeechResponse.class);
             for(int i=0; i<luisSpeechResponse.getIntents().size();i++){
@@ -233,7 +245,7 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
                     }
                 }
             }
-        }
+        }*/
         this.WriteLine(payload);
         this.WriteLine();
     }
@@ -241,6 +253,11 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
     public void onPartialResponseReceived(final String response) {
         this.WriteLine("--- Partial result received by onPartialResponseReceived() ---");
         this.WriteLine(response);
+        if (this instanceof BotMsgActivity) {
+            if (!sharepreferenceKeystore.getBoolean("TextToSpeechFlag")) {
+                onSendPartialLuisMsg(response);
+            }
+        }
         this.WriteLine();
     }
 
@@ -265,8 +282,11 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
 
         WriteLine();
         if (!recording) {
-            this.micClient.endMicAndRecognition();
-            customHandler.postDelayed(updateClient, 1000);
+            if (null != this.micClient) {
+                this.micClient.endMicAndRecognition();
+                customHandler.postDelayed(updateClient, 100);
+            }
+            //initiateClient();
         }
     }
 
@@ -296,18 +316,7 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
 
     protected abstract void onSendLuisMsg(String msg);
 
-    @Override
-    public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-            int result = tts.setLanguage(Locale.US);
-            tts.setPitch(1);
-            tts.setSpeechRate(1f);
-            if (result == TextToSpeech.LANG_MISSING_DATA
-                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS", "Language is not supported");
-            }
-        } else {
-            Log.e("TTS", "Initilization Failed");
-        }
-    }
+    protected abstract void onSendPartialLuisMsg(String msg);
+
+
 }

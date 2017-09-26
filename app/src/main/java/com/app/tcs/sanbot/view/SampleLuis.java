@@ -326,7 +326,7 @@ public class SampleLuis extends Activity implements ISpeechRecognitionServerEven
             // we got the final result, so it we can end the mic reco.  No need to do this
             // for dataReco, since we already called endAudio() on it as soon as we were done
             // sending all the data.
-            this.micClient.endMicAndRecognition();
+           // this.micClient.endMicAndRecognition();
         }
 
         if (isFinalDicationMessage) {

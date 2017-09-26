@@ -48,12 +48,17 @@ public class SplashActivity extends BaseLuisActivity {
     @Override
     protected void checkFaceDeduction() {
 
-        tts.speak("Hi Good morning", TextToSpeech.QUEUE_FLUSH, null);
+        //tts.speak("Hello Good afternoon", TextToSpeech.QUEUE_FLUSH, null);
         doFaceRecognition();
     }
 
     @Override
     protected void onSendLuisMsg(String msg) {
+
+    }
+
+    @Override
+    protected void onSendPartialLuisMsg(String msg) {
 
     }
 
@@ -64,18 +69,32 @@ public class SplashActivity extends BaseLuisActivity {
     }
 
     private void doFaceRecognition() {
-        rlLoaderView.setVisibility(View.VISIBLE);
+       /* rlLoaderView.setVisibility(View.VISIBLE);
         mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
-        initListener();
+        initListener();*/
+        Intent intent = new Intent(SplashActivity.this, BotChatActivity.class);
+        startActivity(intent);
+
     }
 
     @Optional
-    @OnClick(R.id.tv_start)
-    public void onStart(View view) {
-        doFaceRecognition();
+    @OnClick({ R.id.tv_start, R.id.tv_face})
+    public void onclick(View view){
+        switch (view.getId()){
+            case R.id.tv_start:
+                doFaceRecognition();
+                break;
+
+            case R.id.tv_face:
+                initListener();
+                break;
+        }
     }
 
+
     private void initListener() {
+
+        mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
         mediaManager.setMediaListener(new FaceRecognizeListener() {
             @Override
             public void recognizeResult(List<FaceRecognizeBean> list) {

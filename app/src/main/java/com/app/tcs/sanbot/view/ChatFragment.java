@@ -88,6 +88,7 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
                 new GetConversationModelImpl(getActivity(), apiService)
         );
 
+        //getActivity().tff
         chatListAdapter = new ChatListAdapter(getActivity(), botMsgActivitiesResponseList, ChatFragment.this);
         rvChatList.setAdapter(chatListAdapter);
         customHandler = new Handler();
@@ -125,7 +126,6 @@ public class ChatFragment extends Fragment implements ISendConversationPresenter
     @Override
     public void onGetConversationSuccessful(BotMsgResponse botMsgResponse) {
         if (botMsgResponse.getActivities().size() > 0 & arraySize != botMsgResponse.getActivities().size()) {
-
             botMsgActivitiesResponseList.clear();
             botMsgActivitiesResponseList = botMsgResponse.getActivities();
             chatListAdapter.updateRecord(botMsgActivitiesResponseList);

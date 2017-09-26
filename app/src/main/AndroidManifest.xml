@@ -16,48 +16,58 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".view.FaceDetectionActivity"
             android:exported="true"
-
             android:hardwareAccelerated="true">
+            <meta-data
+                android:name="CONFIG_RECORD"
+                android:value="true" />
 
-
-
-            <!--<meta-data
-                android:name="RECOGNIZE_MODE"
-                android:value="1" />-->
-            <meta-data android:name="CONFIG_RECORD" android:value="true"/>
 
         </activity>
-
-        <activity android:name=".view.ScanActivity"/>
-
+        <activity android:name=".view.ScanActivity" />
         <activity android:name=".view.AudioRecord">
             <meta-data
                 android:name="RECOGNIZE_MODE"
                 android:value="1" />
-            <meta-data android:name="CONFIG_RECORD" android:value="true"/>
-
+            <meta-data
+                android:name="CONFIG_RECORD"
+                android:value="true" />
         </activity>
-<!--
+        <!--
         <activity android:name=".view.SampleLuis"
             android:exported="true"
-            android:hardwareAccelerated="true">-->
+            android:hardwareAccelerated="true">
+        -->
+<!--
+        <activity android:name=".view.BotChatActivity">
+            <meta-data
+                android:name="CONFIG_RECORD"
+                android:value="true" />
+        </activity>-->
+
+        <service android:name=".service.BotSocketService" />
+
+        <!--<activity android:name=".view.SampleLuis">-->
+
+        <activity android:name=".view.BotMsgActivity">
 
 
-        <activity android:name=".view.BotChatActivity" >
+            <meta-data
+                android:name="CONFIG_RECORD"
+                android:value="true" />
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data android:name="CONFIG_RECORD" android:value="true"/>
+        </activity>
+
+        <activity android:name=".view.Main3Activity">
 
         </activity>
-        <service android:name=".service.BotSocketService" />
-
-
     </application>
 
 </manifest>

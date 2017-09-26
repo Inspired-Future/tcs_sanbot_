@@ -36,6 +36,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private SharepreferenceKeystore sharepreferenceKeystore;
 
     List<BotMsgActivitiesResponse> botMsgActivitiesResponseList;
+
     public ChatListAdapter(Context context, List<BotMsgActivitiesResponse> botMsgActivitiesResponseList,
                            EventTriggerInterface eventTriggerInterface) {
         this.context = context;
@@ -95,10 +96,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == 0) {
+        if (viewType == 0) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bot_conversation_view, parent, false);
             return new BotViewHolder(view);
-        }else{
+        } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_conversation_view, parent, false);
             return new MyViewHolder(view);
         }
@@ -114,77 +115,105 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof MyViewHolder) {
             final MyViewHolder myViewHolder = (MyViewHolder) holder;
             myViewHolder.tvMyMsg.setText(botMsgActivitiesResponseList.get(position).getText());
-            String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0,16).replace("T"," ");
+            String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0, 16).replace("T", " ");
             myViewHolder.tvMyMsgTimeStamp.setText(timeStamp);
         } else if (holder instanceof BotViewHolder) {
             final BotViewHolder botViewHolder = (BotViewHolder) holder;
-            sharepreferenceKeystore.updateBoolean(AppConstant.SPEECH_LISTENER_FLAG, false);
-            if(botMsgActivitiesResponseList.get(position).getText()!=null){
+            //sharepreferenceKeystore.updateBoolean(AppConstant.SPEECH_LISTENER_FLAG, false);
+            if (botMsgActivitiesResponseList.get(position).getText() != null) {
                 botViewHolder.rlBotMsg.setVisibility(View.VISIBLE);
                 botViewHolder.llBotContent.setVisibility(View.GONE);
                 botViewHolder.tvBotMsg.setText(botMsgActivitiesResponseList.get(position).getText());
 
-                Log.d("TAG_CHAT","position ::: " + position);
-                Log.d("TAG_CHAT","botMsgActivitiesResponseList.size ::: " + botMsgActivitiesResponseList.size());
+                Log.d("TAG_CHAT", "position ::: " + position);
+                Log.d("TAG_CHAT", "botMsgActivitiesResponseList.size ::: " + botMsgActivitiesResponseList.size());
 
-                if(position==botMsgActivitiesResponseList.size()-1 &&
-                        botMsgActivitiesResponseList.get(position).getText().toString().contains("Please scan the QR Code")){
+                if (position == botMsgActivitiesResponseList.size() - 1 &&
+                        botMsgActivitiesResponseList.get(position).getText().toString().contains("Please scan the QR Code")) {
                     eventTriggerInterface.scanQRCode();
                 }
-                String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0,16).replace("T"," ");
+                String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0, 16).replace("T", " ");
                 botViewHolder.tvBotMsgTimeStamp.setText(timeStamp);
-            }else {
+            } else {
 
                 botViewHolder.rlBotMsg.setVisibility(View.GONE);
                 botViewHolder.llBotContent.setVisibility(View.VISIBLE);
                 botViewHolder.tvBotTitleMsg.setText(botMsgActivitiesResponseList.get(position)
                         .getAttachments().get(0).getContent().getTitle());
 
-                if(botMsgActivitiesResponseList.get(position)
-                        .getAttachments().get(0).getContent().getSubtitle()!=null) {
+                if (botMsgActivitiesResponseList.get(position)
+                        .getAttachments().get(0).getContent().getSubtitle() != null) {
                     botViewHolder.tvBotSubTitleMsg.setText(botMsgActivitiesResponseList.get(position)
                             .getAttachments().get(0).getContent().getSubtitle());
                 }
-                String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0,16).replace("T"," ");
+                String timeStamp = botMsgActivitiesResponseList.get(position).getTimestamp().substring(0, 16).replace("T", " ");
                 botViewHolder.tvBotMsgTimeStampNext.setText(timeStamp);
 
-                if(botMsgActivitiesResponseList.get(position).getAttachments().get(0).getContent()
-                        .getImages()!=null)
+                if (botMsgActivitiesResponseList.get(position).getAttachments().size() > 0) {
+                    if (botMsgActivitiesResponseList.get(position).getAttachments().size() == 1) {
 
-                Glide.with(context)
-                        .load(botMsgActivitiesResponseList.get(position).getAttachments().get(0).getContent()
-                                .getImages().get(0).getUrl())
-                        .asBitmap().fitCenter().error(R.mipmap.ic_launcher)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                botViewHolder.ivBotImage.setImageBitmap(resource);
-                            }
-                        });
+                        if (botMsgActivitiesResponseList.get(position).getAttachments().get(0).getContent()
+                                .getImages() != null) {
 
-                int btnSize = botMsgActivitiesResponseList.get(position).getAttachments().get(0).getContent().getButtons().size();
+                            Glide.with(context)
+                                    .load(botMsgActivitiesResponseList.get(position).getAttachments().get(0).getContent()
+                                            .getImages().get(0).getUrl())
+                                    .asBitmap().fitCenter().error(R.mipmap.ic_launcher)
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                            botViewHolder.ivBotImage.setImageBitmap(resource);
+                                        }
+                                    });
+                        }
 
-                botViewHolder.tlBotBtnList.removeAllViews();
-                for (int i = 0; i < btnSize; i++) {
-                    TableRow row = (TableRow) LayoutInflater.from(context).inflate(R.layout.bot_content_button, null);
-                    TextView dynamicTextView = (TextView) row.findViewById(R.id.tv_bot_content_button_row);
+                        int btnSize = botMsgActivitiesResponseList.get(position).getAttachments().get(0).getContent().getButtons().size();
 
-                    dynamicTextView.setText(botMsgActivitiesResponseList.get(position).getAttachments()
-                            .get(0).getContent().getButtons().get(i).getTitle());
+                        botViewHolder.tlBotBtnList.removeAllViews();
+                        for (int i = 0; i < btnSize; i++) {
+                            TableRow row = (TableRow) LayoutInflater.from(context).inflate(R.layout.bot_content_button, null);
+                            TextView dynamicTextView = (TextView) row.findViewById(R.id.tv_bot_content_button_row);
 
-                    dynamicTextView.setTag(botMsgActivitiesResponseList.get(position).getId() + "$" +
-                            botMsgActivitiesResponseList.get(position).getAttachments()
+                            dynamicTextView.setText(botMsgActivitiesResponseList.get(position).getAttachments()
                                     .get(0).getContent().getButtons().get(i).getTitle());
 
-                    dynamicTextView.setOnClickListener(new View.OnClickListener() {
+                            dynamicTextView.setTag(botMsgActivitiesResponseList.get(position).getId() + "$" +
+                                    botMsgActivitiesResponseList.get(position).getAttachments()
+                                            .get(0).getContent().getButtons().get(i).getTitle());
 
-                        @Override
-                        public void onClick(View view) {
-                            Log.d("Hello", "" + view.getTag());
-                            eventTriggerInterface.eventTrigger("" + view.getTag());
+                            dynamicTextView.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View view) {
+                                    Log.d("Hello", "" + view.getTag());
+                                    eventTriggerInterface.eventTrigger("" + view.getTag());
+                                }
+                            });
+                            botViewHolder.tlBotBtnList.addView(row);
                         }
-                    });
-                    botViewHolder.tlBotBtnList.addView(row);
+                    } else {
+                        botViewHolder.ivBotImage.setVisibility(View.GONE);
+                        botViewHolder.tlBotBtnList.removeAllViews();
+                        for (int j = 0; j < botMsgActivitiesResponseList.get(position).getAttachments().size(); j++) {
+                            TableRow row = (TableRow) LayoutInflater.from(context).inflate(R.layout.bot_content_button, null);
+                            TextView dynamicTextView = (TextView) row.findViewById(R.id.tv_bot_content_button_row);
+                            dynamicTextView.setText(botMsgActivitiesResponseList.get(position).getAttachments()
+                                    .get(j).getContent().getButtons().get(0).getTitle());
+
+                            dynamicTextView.setTag(botMsgActivitiesResponseList.get(position).getId() + "$" +
+                                    botMsgActivitiesResponseList.get(position).getAttachments()
+                                            .get(j).getContent().getButtons().get(0).getValue());
+
+                            dynamicTextView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Log.d("Hello", "" + view.getTag());
+                                    eventTriggerInterface.eventTrigger("" + view.getTag());
+                                }
+                            });
+                            botViewHolder.tlBotBtnList.addView(row);
+                        }
+                    }
                 }
             }
 
@@ -198,15 +227,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if(botMsgActivitiesResponseList.get(position).getFrom().getId().equalsIgnoreCase("Loungie-Production")){
+        if (botMsgActivitiesResponseList.get(position).getFrom().getId().equalsIgnoreCase("Loungie-Production")) {
             return 0;
-        }else {
+        } else {
             return 1;
         }
     }
 
     public interface EventTriggerInterface {
         public void eventTrigger(String msg);
+
         void scanQRCode();
     }
 

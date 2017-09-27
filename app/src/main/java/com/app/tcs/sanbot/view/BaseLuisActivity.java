@@ -152,6 +152,7 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
 
     private void initiateClient() {
         if (this.micClient != null) {
+
             this.micClient.endMicAndRecognition();
             try {
                 this.micClient.finalize();
@@ -289,9 +290,17 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
         }else{
             if(sharepreferenceKeystore.getBoolean("LuisKeyPreference")) {
 
+                this.WriteLine("Elseeeeeeeeeeeeeeeeeeee");
                 if (null != this.micClient) {
+                    this.WriteLine("Elseeeeeeeeeeeeeeeeeeee  nullllllll");
                     this.micClient.endMicAndRecognition();
-                    customHandler.postDelayed(updateClient, 300);
+                    /*try {
+                        this.micClient.finalize();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                    this.micClient = null;*/
+                    customHandler.postDelayed(updateClient, 500);
                 }
             }
         }

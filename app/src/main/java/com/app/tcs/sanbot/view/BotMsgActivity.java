@@ -311,6 +311,13 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
             if (botMsgActivitiesResponse.getAttachments().size() > 1) {
                 sanbotHead.setVisibility(View.GONE);
                 rajeshHead.setVisibility(View.GONE);
+
+                projectorManager.setMode(ProjectorManager.MODE_WALL);
+                projectorManager.setMirror(ProjectorManager.MIRROR_CLOSE);
+                projectorManager.switchProjector(true);
+
+                iNetPresenter.callINet(AppConstant.INET_URL_OFF);
+
                 for (int i = 0; i < botMsgActivitiesResponse.getAttachments().size(); i++) {
                     TableRow row = (TableRow) LayoutInflater.from(this).inflate(R.layout.bot_content_new, null);
                     TextView dynamicNewsTextTitle = (TextView) row.findViewById(R.id.tv_news_title);
@@ -347,6 +354,12 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
                         wvSanbotView.setVisibility(View.VISIBLE);
                         tlBotMsglist.setVisibility(View.GONE);
                         tvMsg.setVisibility(View.GONE);
+
+
+                        projectorManager.setMode(ProjectorManager.MODE_WALL);
+                        projectorManager.setMirror(ProjectorManager.MIRROR_CLOSE);
+                        projectorManager.switchProjector(true);
+                        iNetPresenter.callINet(AppConstant.INET_URL_OFF);
 
                        // openProjector();
 
@@ -404,12 +417,12 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
 
     private void openProjector() {
 
-        iNetPresenter.callINet(AppConstant.INET_URL_OFF);
+        //iNetPresenter.callINet(AppConstant.INET_URL_OFF);
 
         //tts_face_detection.speak("Alexa turn off light", TextToSpeech.QUEUE_FLUSH, null);
-        projectorManager.setMode(ProjectorManager.MODE_WALL);
-        projectorManager.setMirror(ProjectorManager.MIRROR_CLOSE);
-        projectorManager.switchProjector(true);
+       // projectorManager.setMode(ProjectorManager.MODE_WALL);
+       // projectorManager.setMirror(ProjectorManager.MIRROR_CLOSE);
+       // projectorManager.switchProjector(true);
         customHandler = new Handler();
         customHandler.postDelayed(updateListThread, 20000);
     }

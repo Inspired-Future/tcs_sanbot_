@@ -13,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 
 public interface ApiInterface {
@@ -31,6 +32,9 @@ public interface ApiInterface {
     @GET(AppConstant.CONVERSATION)
     Call<BotMsgResponse> getConversationMessage(@Path("conversation_id") String conversationId,
                                                 @Header("Authorization") String authorization);
+
+    @GET
+    Call<String> callINet(@Url String url);
 
 
 }

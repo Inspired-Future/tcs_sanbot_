@@ -19,113 +19,70 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class Main3Activity extends AppCompatActivity implements TextToSpeech.OnInitListener  {
+
+public class Main3Activity extends AppCompatActivity   {
 
 
-    public TextToSpeech tts;
+    //public TextToSpeech tts;
     Handler customHandler;
+    Handler customHandler111;
+
+    public boolean flag = false;
+    int i =0;
     //HTextView tv;
+    String[] hh = {"Alaxa", "Alaaxa","Alaksa"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        //String
 
         //tts = new TextToSpeech(this, this);
         customHandler = new Handler();
-        //customHandler.postDelayed(nextRotateThread, 16000);
-       // tv = (HTextView) findViewById(R.id.textview3);
-
-       /* ViewTreeObserver vto = tv.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                tv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                tv.animateText("YOUR NIGHT LIFE PLANNER");
-                customHandler.postDelayed(nextRotateThread, 2000);
-            }
-        });*/
-
-        //
-
-        //tv.setAnimation(new SimpleAnimationListener(this));
-
-        /*tv.setAnimation(new SimpleAnimationListener(this));
-
-       // tv.setProgress(50 / 100f);
-        if (tv instanceof HTextView) {
+       /* customHandler.postDelayed(nextRotateThread, 5000);
 
 
-            ((HTextView) tv).animateText("hgdshsdjkjdskjdsjlkjdslkjslkdjlkdsjlkjsdlkjds");
-
-
-        }*/
-        //tv.animateText("hgdshsdjkjdskjdsjlkjdslkjslkdjlkdsjlkjsdlkjds");
-        //((HTextView) v).animateText
-
-
-
+        customHandler111 = new Handler();
+*/
     }
-
-    @Override
-    public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-
-
-            tts.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener() {
-
-                @Override
-                public void onUtteranceCompleted(final String utteranceId) {
-                    //System.out.println("Completed");
-                    Log.d("TAG_RAJ","::::: Completed ::::::");
-
-                    runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            //UI changes
-                        }
-                    });
-                }
-
-
-            });
-
-            int result = tts.setLanguage(Locale.US);
-            tts.setPitch(1);
-            tts.setSpeechRate(1f);
-            if (result == TextToSpeech.LANG_MISSING_DATA
-                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS", "Language is not supported");
-            }
-        } else {
-            Log.e("TTS", "Initilization Failed");
-        }
-    }
-
 
     private Runnable nextRotateThread = new Runnable() {
         public void run() {
 
-            /*HashMap<String,String> ttsParams = new HashMap<String, String>();
-            ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
-                    Main3Activity.this.getPackageName());
 
-
-            String text = "Hello there I am Sevaka. Your SIA Krisflyer lounge assistant. " +
-                    "Let me guide you through the services. Please choose from the following";
-
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);*/
             //tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
            // tts.speak()
-
-
            // tv.animateText("haaaaaaaa LIFE PLANNER");
+            if(i<3){
+                i=0;
+            }
+            stt(hh[i]);
+                    i++;
 
-            customHandler.postDelayed(nextRotateThread, 1000);
 
         }
     };
+
+
+
+    private Runnable customHandler11 = new Runnable() {
+        public void run() {
+
+
+
+            stt("turn on light");
+
+
+            customHandler.postDelayed(nextRotateThread, 5000);
+
+            flag = true;
+
+
+        }
+    };
+
+
 
 
 
@@ -156,4 +113,21 @@ public class Main3Activity extends AppCompatActivity implements TextToSpeech.OnI
         }
     }
 
+    void stt(String msg){
+        Log.d("TAG_ROBOTS","msg ::: --- " + msg);
+        HashMap<String,String> ttsParams = new HashMap<String, String>();
+        ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
+                Main3Activity.this.getPackageName());
+
+     //   tts.speak(msg, TextToSpeech.QUEUE_FLUSH, ttsParams);
+
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //tts.stop();
+    }
 }

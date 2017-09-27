@@ -14,4 +14,8 @@ public class AppConstant {
     public static final String ROBOT_STATEMENT = "";
     public static final String SPEECH_LISTENER_FLAG = "sanbot_speech_listener_flag";
 
+
+    public static final String INET_URL_ON = "http://192.168.1.81:8181/device.cgi?dev=16&cmd=135";
+    public static final String INET_URL_OFF = "http://192.168.1.81:8181/device.cgi?dev=16&cmd=134";
+
 }

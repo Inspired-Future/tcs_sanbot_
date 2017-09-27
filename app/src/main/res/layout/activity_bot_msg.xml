@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sanbot_bg">
@@ -41,6 +42,14 @@
             android:layout_height="wrap_content"
             />
 
+
+            <WebView
+                android:id="@+id/wv_traffic_url"
+                android:layout_width="800dp"
+                android:layout_height="350dp"
+                tools:ignore="WebViewLayout"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
     </RelativeLayout>
@@ -81,6 +90,8 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/rajesh_head"
         android:visibility="gone"/>
+
+
 
 
 </RelativeLayout>

@@ -32,9 +32,14 @@
  */
 package com.app.tcs.sanbot.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.app.tcs.sanbot.R;
@@ -136,6 +141,8 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
         customHandler = new Handler();
         //tts = new TextToSpeech(this, this);
         initiateClient();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter("LuisBroadcastIntent"));
     }
 
     @Override
@@ -192,6 +199,7 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
             // sending all the data.
 
             //this.micClient.endMicAndRecognition();
+
         }
 
         if (isFinalDicationMessage) {
@@ -278,16 +286,24 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
         this.WriteLine("********* Microphone status: " + recording + " *********");
         if (recording) {
             this.WriteLine("Please start speaking.");
+        }else{
+            if(sharepreferenceKeystore.getBoolean("LuisKeyPreference")) {
+
+                if (null != this.micClient) {
+                    this.micClient.endMicAndRecognition();
+                    customHandler.postDelayed(updateClient, 300);
+                }
+            }
         }
 
         WriteLine();
-        if (!recording) {
+       /* if (!recording) {
             if (null != this.micClient) {
                 this.micClient.endMicAndRecognition();
                 customHandler.postDelayed(updateClient, 100);
             }
             //initiateClient();
-        }
+        }*/
     }
 
     /**
@@ -303,7 +319,7 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
      * @param text The line to write.
      */
     private void WriteLine(String text) {
-        Log.d("TAG_LUIS", text);
+        Log.d("TAG_ROBOT", text);
     }
 
     private Runnable updateClient = new Runnable() {
@@ -317,6 +333,23 @@ public abstract class BaseLuisActivity extends TopBaseActivity implements ISpeec
     protected abstract void onSendLuisMsg(String msg);
 
     protected abstract void onSendPartialLuisMsg(String msg);
+
+
+    public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null ) {
+                if(intent.getBooleanExtra("LuisKey", false)){
+                    sharepreferenceKeystore.updateBoolean("LuisKeyPreference",true);
+                    initiateClient();
+                }else{
+                    sharepreferenceKeystore.updateBoolean("LuisKeyPreference",false);
+                    micClient.endMicAndRecognition();
+                }
+                //Get all your data from intent and do what you want
+            }
+        }
+    };
 
 
 }

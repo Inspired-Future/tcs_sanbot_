@@ -7,16 +7,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.tcs.sanbot.R;
 import com.app.tcs.sanbot.appconstant.AppConstant;
@@ -28,12 +33,15 @@ import com.app.tcs.sanbot.bean.SendConversationResponse;
 import com.app.tcs.sanbot.bean.StartConversation;
 import com.app.tcs.sanbot.model.GetBotTokenModelImpl;
 import com.app.tcs.sanbot.model.GetConversationModelImpl;
+import com.app.tcs.sanbot.model.INetModelImpl;
 import com.app.tcs.sanbot.model.SendConversationModelImpl;
 import com.app.tcs.sanbot.model.StartConversationModelImpl;
 import com.app.tcs.sanbot.presenter.GetBotTokenPresenterImpl;
 import com.app.tcs.sanbot.presenter.GetConversationPresenterImpl;
 import com.app.tcs.sanbot.presenter.IGetBotTokenPresenter;
 import com.app.tcs.sanbot.presenter.IGetConversationPresenter;
+import com.app.tcs.sanbot.presenter.IINetPresenter;
+import com.app.tcs.sanbot.presenter.INetPresenterImpl;
 import com.app.tcs.sanbot.presenter.ISendConversationPresenter;
 import com.app.tcs.sanbot.presenter.IStartConversationPresenter;
 import com.app.tcs.sanbot.presenter.SendConversationPresenterImpl;
@@ -60,7 +68,7 @@ import io.socket.client.Socket;
 
 
 public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPresenter.View,
-        IStartConversationPresenter.View, ISendConversationPresenter.View,
+        IStartConversationPresenter.View, ISendConversationPresenter.View, IINetPresenter.View,
         IGetConversationPresenter.View, TextToSpeech.OnInitListener {
 
     public ApiInterface apiService;
@@ -69,6 +77,10 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
     public StartConversationPresenterImpl startConversationPresenter;
     public SendConversationPresenterImpl sendConversationPresenter;
     public GetConversationPresenterImpl getConversationPresenter;
+
+
+    public INetPresenterImpl  iNetPresenter;
+
     private String conversationId;
     private String conversationToken;
     private Handler getBotMsgHandler;
@@ -97,6 +109,9 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
     @BindView(R.id.iv_sanbot_head)
     ImageView sanbotHead;
 
+    @BindView(R.id.wv_traffic_url)
+    WebView wvSanbotView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
@@ -123,18 +138,53 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
         );
         getBotTokenPresenter.getBotToken(AppConstant.BOT_SECRET_KEY);
 
-        /*ViewTreeObserver vto = tvMsg.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+
+        iNetPresenter = new INetPresenterImpl(
+                this,
+                new INetModelImpl(this, apiService)
+        );
+
+
+        Intent intent = new Intent("LuisBroadcastIntent");
+        intent.putExtra("LuisKey", false);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+        loadWebView();
+
+
+
+    }
+
+    private void loadWebView() {
+
+
+        wvSanbotView.getSettings().setJavaScriptEnabled(true);
+        wvSanbotView.setWebViewClient(new WebViewClient(){
             @Override
-            public void onGlobalLayout() {
-                tvMsg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                tvMsg.animateText("");
+            public void onPageStarted(WebView view, String url, Bitmap favicon){
+                // Page loading started
+                // Do something
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url){
+                // Page loading finished
+                //Toast.makeText(mContext,"Page Loaded.",Toast.LENGTH_SHORT).show();
+                openProjector();
             }
         });
-*/
 
-        // getBotTokenPresenter.getBotToken(AppConstant.BOT_SECRET_KEY);
-
+        // Set a WebChromeClient for WebView
+        // Another way to determine when page loading finish
+        wvSanbotView.setWebChromeClient(new WebChromeClient(){
+            public void onProgressChanged(WebView view, int newProgress){
+                if(newProgress == 100){
+                    //mTextView.setText("Page Loaded.");
+                    openProjector();
+                }
+            }
+        });
     }
 
     @Override
@@ -150,6 +200,9 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
         //tvMsg.animateText(msg);
         sanbotHead.setVisibility(View.GONE);
         rajeshHead.setVisibility(View.VISIBLE);
+        wvSanbotView.setVisibility(View.GONE);
+
+        tvMsg.setVisibility(View.VISIBLE);
         tvMsg.setText(msg);
         sendConversationPresenter.sendConversation(conversationId,
                 "message", msg, "user1", conversationToken, false);
@@ -161,7 +214,10 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
         tvMsg.setText(msg);
         sanbotHead.setVisibility(View.GONE);
         rajeshHead.setVisibility(View.VISIBLE);
+        wvSanbotView.setVisibility(View.GONE);
+        tvMsg.setVisibility(View.VISIBLE);
         //tlBotMsglist.removeAllViews();
+
     }
 
 
@@ -242,13 +298,15 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
 
     private void updateSofiaMsg(BotMsgActivitiesResponse botMsgActivitiesResponse, String botId) {
         if (botMsgActivitiesResponse.getText() != null) {
-            tvMsg.setText(botMsgActivitiesResponse.getText().replace("Hello Rawjaish","Hello Rajesh"));
+            tvMsg.setText(botMsgActivitiesResponse.getText().replace("Hello Rawjaesh","Hello Rajesh"));
         }
         //tvMsg.setText(botMsgActivitiesResponse.getText());
         sharepreferenceKeystore.updateBoolean("TextToSpeechFlag", true);
         textToSpeech(botMsgActivitiesResponse.getText());
         tlBotMsglist.removeAllViews();
+        tvMsg.setVisibility(View.VISIBLE);
         tlBotMsglist.setVisibility(View.VISIBLE);
+        wvSanbotView.setVisibility(View.GONE);
         if (botMsgActivitiesResponse.getAttachments() != null && botMsgActivitiesResponse.getAttachments().size() > 0) {
             if (botMsgActivitiesResponse.getAttachments().size() > 1) {
                 sanbotHead.setVisibility(View.GONE);
@@ -278,44 +336,42 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
 
                     tlBotMsglist.addView(row);
                 }
-
-
-                projectorManager.setMode(ProjectorManager.MODE_WALL);
-                projectorManager.setMirror(ProjectorManager.MIRROR_CLOSE);
-                //projectorManager.setMirror(ProjectorManager.MIRROR_UD);
-                //projectorManager.switchProjector(true);
-                //projectorManager.setMode(ProjectorManager.MODE_WALL);
-                projectorManager.switchProjector(true);
-
-                customHandler = new Handler();
-                customHandler.postDelayed(updateListThread, 15000);
-
-
+                openProjector();
             } else {
                 if (botMsgActivitiesResponse.getAttachments().get(0).getContent().getButtons() == null) {
 
-                    TableRow row = (TableRow) LayoutInflater.from(this).inflate(R.layout.bot_content_wheather, null);
-                    TextView dynamicNewsTextTitle = (TextView) row.findViewById(R.id.tv_wheather_title);
-                    TextView dynamicNewsTextDescription = (TextView) row.findViewById(R.id.tv_wheather_description);
-                    final ImageView dynamicNewsImage = (ImageView) row.findViewById(R.id.iv_wheather_img);
+                    if(botMsgActivitiesResponse.getAttachments().get(0).getContent().getSubtitle()!=null
+                            && botMsgActivitiesResponse.getAttachments().get(0).getContent().getSubtitle().contains("https://www.google.com")){
 
+                        loadURL(botMsgActivitiesResponse.getAttachments().get(0).getContent().getSubtitle());
+                        wvSanbotView.setVisibility(View.VISIBLE);
+                        tlBotMsglist.setVisibility(View.GONE);
+                        tvMsg.setVisibility(View.GONE);
 
-                    dynamicNewsTextTitle.setText(botMsgActivitiesResponse.getAttachments().get(0).getContent().getTitle());
+                       // openProjector();
 
-                    textToSpeech(botMsgActivitiesResponse.getAttachments().get(0).getContent().getTitle() + botMsgActivitiesResponse.getAttachments().get(0).getContent().getSubtitle());
+                    }else {
+                        TableRow row = (TableRow) LayoutInflater.from(this).inflate(R.layout.bot_content_wheather, null);
+                        TextView dynamicNewsTextTitle = (TextView) row.findViewById(R.id.tv_wheather_title);
+                        TextView dynamicNewsTextDescription = (TextView) row.findViewById(R.id.tv_wheather_description);
+                        final ImageView dynamicNewsImage = (ImageView) row.findViewById(R.id.iv_wheather_img);
+                        dynamicNewsTextTitle.setText(botMsgActivitiesResponse.getAttachments().get(0).getContent().getTitle());
 
-                    Glide.with(this)
-                            .load(botMsgActivitiesResponse.getAttachments().get(0).getContent().getImages().get(0).getUrl())
-                            .asBitmap().fitCenter().error(R.mipmap.ic_launcher)
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                    dynamicNewsImage.setImageBitmap(resource);
-                                }
-                            });
+                        textToSpeech(botMsgActivitiesResponse.getAttachments().get(0).getContent().getTitle() + botMsgActivitiesResponse.getAttachments().get(0).getContent().getSubtitle());
 
-                    dynamicNewsTextDescription.setText(botMsgActivitiesResponse.getAttachments().get(0).getContent().getSubtitle());
-                    tlBotMsglist.addView(row);
+                        Glide.with(this)
+                                .load(botMsgActivitiesResponse.getAttachments().get(0).getContent().getImages().get(0).getUrl())
+                                .asBitmap().fitCenter().error(R.mipmap.ic_launcher)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                        dynamicNewsImage.setImageBitmap(resource);
+                                    }
+                                });
+
+                        dynamicNewsTextDescription.setText(botMsgActivitiesResponse.getAttachments().get(0).getContent().getSubtitle());
+                        tlBotMsglist.addView(row);
+                    }
                 } else {
                     List<BotMsgButtonResponse> botMsgButtonResponses = botMsgActivitiesResponse.getAttachments().get(0).getContent().getButtons();
                     for (int i = 0; i < botMsgButtonResponses.size(); i++) {
@@ -346,8 +402,24 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
         }
     }
 
+    private void openProjector() {
+
+        iNetPresenter.callINet(AppConstant.INET_URL_OFF);
+
+        //tts_face_detection.speak("Alexa turn off light", TextToSpeech.QUEUE_FLUSH, null);
+        projectorManager.setMode(ProjectorManager.MODE_WALL);
+        projectorManager.setMirror(ProjectorManager.MIRROR_CLOSE);
+        projectorManager.switchProjector(true);
+        customHandler = new Handler();
+        customHandler.postDelayed(updateListThread, 20000);
+    }
+
 
     void textToSpeech(String speechTxt) {
+        Intent intent = new Intent("LuisBroadcastIntent");
+        intent.putExtra("LuisKey", false);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
         HashMap<String, String> ttsParams = new HashMap<String, String>();
         ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,
                 BotMsgActivity.this.getPackageName());
@@ -367,6 +439,10 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Intent intent = new Intent("LuisBroadcastIntent");
+                            intent.putExtra("LuisKey", true);
+                            LocalBroadcastManager.getInstance(BotMsgActivity.this).sendBroadcast(intent);
+
                             getConversationPresenter.getConversationMsg(conversationId, conversationToken);
                         }
                     });
@@ -399,8 +475,27 @@ public class BotMsgActivity extends BaseLuisActivity implements IGetBotTokenPres
             projectorManager.switchProjector(false);
             sharepreferenceKeystore.updateBoolean("TextToSpeechFlag", false);
             getConversationPresenter.getConversationMsg(conversationId, conversationToken);
+            iNetPresenter.callINet(AppConstant.INET_URL_ON);
+
+            //tts_face_detection.speak("Alexa turn on light", TextToSpeech.QUEUE_FLUSH, null);
         }
     };
 
 
+    @Override
+    public void onDestroy() {
+        sharepreferenceKeystore.updateBoolean("LuisKeyPreference",false);
+        tts_face_detection.stop();
+        super.onDestroy();
+    }
+
+
+    public void loadURL(String mURL){
+        wvSanbotView.loadUrl(mURL);
+    }
+
+    @Override
+    public void onCallINetSuccessful() {
+
+    }
 }

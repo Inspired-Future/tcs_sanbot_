@@ -1,9 +1,11 @@
 package com.app.tcs.sanbot.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaCodec;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.qihancloud.opensdk.base.TopBaseActivity;
 import com.qihancloud.opensdk.beans.FuncConstant;
 import com.qihancloud.opensdk.function.beans.FaceRecognizeBean;
 import com.qihancloud.opensdk.function.beans.handmotion.NoAngleHandMotion;
+import com.qihancloud.opensdk.function.beans.wheelmotion.RelativeAngleWheelMotion;
 import com.qihancloud.opensdk.function.unit.HandMotionManager;
 import com.qihancloud.opensdk.function.unit.MediaManager;
 import com.qihancloud.opensdk.function.unit.interfaces.media.FaceRecognizeListener;
@@ -41,7 +44,10 @@ public class FaceDetectionActivity extends TopBaseActivity {
      @BindView(R.id.pb_loader)
      AVLoadingIndicatorView avi;
 
-    private MediaManager mediaManager;
+
+
+    Handler customHandler;
+   // private MediaManager mediaManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,10 +57,14 @@ public class FaceDetectionActivity extends TopBaseActivity {
 
         setContentView(R.layout.activity_face_detection);
         ButterKnife.bind(this);
-        mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
+        //mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
         //avi.setIndicatorColor(Color.parseColor("#FFD700"));
         avi.show();
-        initListener();
+        //initListener();
+
+
+        customHandler = new Handler();
+        customHandler.postDelayed(updateThread, 5000);
     }
 
     @Override
@@ -63,31 +73,41 @@ public class FaceDetectionActivity extends TopBaseActivity {
 
 
 
+    private Runnable updateThread = new Runnable() {
+        public void run() {
+
+
+            startActivity(new Intent(FaceDetectionActivity.this, BotMsgActivity.class));
+            finish();
+        }
+    };
+
+
 
     private void initListener() {
 
-        mediaManager.setMediaListener(new FaceRecognizeListener() {
+        /*mediaManager.setMediaListener(new FaceRecognizeListener() {
             @Override
             public void recognizeResult(List<FaceRecognizeBean> list) {
                 startActivity(new Intent(FaceDetectionActivity.this, BotMsgActivity.class));
                 finish();
 
-                /*StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i).getUser() != null) {
                         startActivity(new Intent(FaceDetectionActivity.this, BotMsgActivity.class));
                         finish();
                     }
-                }*/
-                   /* for (FaceRecognizeBean bean : list) {
-                        if(list.get())
+                }
+                    for (FaceRecognizeBean bean : list) {
+                        //if(list.get())
                         sb.append(new Gson().toJson(bean));
                         sb.append("\n");
-                    }*/
+                    }
                 //Log.d("TAG_FACE", "sb.toString() ::: " + sb.toString());
                 // }
             }
-        });
+        });*/
 
 
     }

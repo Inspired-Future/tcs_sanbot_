@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e55cfad0b487103cf4f024104f73ee759f5c4ae1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2e5cdf0b225850138785491e3136752999cf3284">
+        <dex dex="C:\Users\1407053\Desktop\TCS_Sample_Code\tcs_sanbot\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3b83e1d82667911545c61249a69a6623f76bbf87\classes.dex" />
+    </item>
+
+</items>

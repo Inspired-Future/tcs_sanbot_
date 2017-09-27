@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -62,6 +63,10 @@ public class BotChatActivity extends BaseLuisActivity implements IGetBotTokenPre
                 new GetBotTokenModelImpl(this, apiService)
         );
         getBotTokenPresenter.getBotToken(AppConstant.BOT_SECRET_KEY);
+
+        Intent intent = new Intent("LuisBroadcastIntent");
+        intent.putExtra("LuisKey", false);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
     }
 

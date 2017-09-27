@@ -24,6 +24,15 @@
                 android:value="true" />
 
 
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+
         </activity>
         <activity android:name=".view.ScanActivity" />
         <activity android:name=".view.AudioRecord">
@@ -53,21 +62,15 @@
         <activity android:name=".view.BotMsgActivity">
 
 
+
             <meta-data
                 android:name="CONFIG_RECORD"
                 android:value="true" />
 
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
-        <activity android:name=".view.Main3Activity">
-
-        </activity>
     </application>
 
 </manifest>
